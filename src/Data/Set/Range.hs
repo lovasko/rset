@@ -113,7 +113,7 @@ cmp (a,b) (c,d)
   | between c a b && between d a b   = SndInside
   | a < c         && between b c d   = FstOverlap
   | c < a         && between d a b   = SndOverlap
-  | otherwise                        = Equal -- ^ dead code
+  | otherwise                        = Equal -- dead code
   where
     between x lo hi = lo <= x && x <= hi
 
