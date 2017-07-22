@@ -81,15 +81,15 @@ toList ((a,b):xs) = [a .. b] ++ toList xs
 
 -- | Merge all adjacent ranges.
 merge :: (Eq a, Enum a)
-      => RangeSet a -- ^ old range set 
-      -> RangeSet a -- ^ new range set 
+      => RangeSet a -- ^ old range set
+      -> RangeSet a -- ^ new range set
 merge []        = []
 merge [xs]      = [xs]
 merge ((a,b) : (c,d) : xs)
   |      b == c =         merge ((a,d) : xs)
   | succ b == c =         merge ((a,d) : xs)
   | otherwise   = (a,b) : merge ((c,d) : xs)
-    
+
 data Overlap
  = FstSmaller -- ^ no overlap + first range is smaller
  | SndSmaller -- ^ no overlap + second range is smaller
@@ -135,7 +135,7 @@ queryRange x (r : rs) = go $ cmp x r
     go FstSmaller = False
     go SndSmaller = queryRange x rs
     go Equal      = True
-    go FstInside  = True 
+    go FstInside  = True
     go SndInside  = False
     go FstOverlap = False
     go SndOverlap = False
