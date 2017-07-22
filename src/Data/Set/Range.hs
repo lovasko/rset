@@ -15,6 +15,10 @@ module Data.Set.Range
 , insertPoint
 , insertRange
 
+-- member testing
+, queryPoint
+, queryRange
+
 -- combinations
 , intersect
 , union
@@ -112,6 +116,29 @@ cmp (a,b) (c,d)
   | otherwise                      = Equal -- ^ dead code
   where
     between x lo hi = lo <= x && x <= hi
+
+-- | Test whether a point is included in the range set.
+queryPoint :: Ord a
+           => a          -- ^ point
+           -> RangeSet a -- ^ range
+           -> Bool       -- ^ decision
+queryPoint p = queryRange (p,p)
+
+-- | Test whether a range is included in the range set.
+queryRange :: Ord a
+           => (a,a)      -- ^ range
+           -> RangeSet a -- ^ range set
+           -> Bool       -- ^ decision
+queryRange _ []       = False
+queryRange x (r : rs) = go $ cmp x r
+  where
+    go FstSmaller = False
+    go SndSmaller = queryRange x rs
+    go Equal      = True
+    go FstInside  = True 
+    go SndInside  = False
+    go FstOverlap = False
+    go SndOverlap = False
 
 -- | Create an union of two range sets.
 union :: (Ord a, Enum a)
