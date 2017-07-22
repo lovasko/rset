@@ -46,7 +46,10 @@ intersectTest xs ys = rset == set
 -- | Test the number of stored points in a set.
 sizeTest :: [Word8]
          -> Bool
-sizeTest xs = (genericLength . nub) xs == (R.size . R.fromList) xs
+sizeTest xs = rset == set
+  where
+    set  = (genericLength . nub) xs :: Integer
+    rset = (R.size . R.fromList) xs :: Integer
 
 -- | Print a name of the property test and execute the QuickCheck
 -- algorithm.
