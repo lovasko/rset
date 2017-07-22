@@ -1,4 +1,3 @@
-import Control.Monad
 import Data.List
 import Data.Word
 import Safe
