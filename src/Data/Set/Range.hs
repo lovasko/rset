@@ -166,10 +166,10 @@ intersect _  []                 = []
 intersect [] _                  = []
 intersect ((a,b):xs) ((c,d):ys) = merge $ go $ cmp (a,b) (c,d)
   where
-    go FstSmaller =         intersect xs ys
-    go SndSmaller =         intersect xs ys
+    go FstSmaller =         intersect xs ((c,d) : ys)
+    go SndSmaller =         intersect ((a,b) : xs) ys
     go Equal      = (a,b) : intersect xs ys
-    go FstInside  = (a,b) : intersect xs ((c,a) : (b,d) : ys)
-    go SndInside  = (c,d) : intersect ((a,c) : (b,d) : xs) ys
+    go FstInside  = (a,b) : intersect xs ((b,d) : ys)
+    go SndInside  = (c,d) : intersect ((d,b) : xs) ys
     go FstOverlap = (c,b) : intersect xs ((b,d) : ys)
     go SndOverlap = (a,d) : intersect ((d,b) : xs) ys
