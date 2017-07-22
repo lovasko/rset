@@ -94,6 +94,7 @@ data Overlap
  | SndInside  -- ^ second range is inside the first one
  | FstOverlap -- ^ first range is smaller and overlaps with second one
  | SndOverlap -- ^ second range is smaller and overlaps with first one
+ deriving (Eq, Show)
 
 -- | Compute the overlap relationship between to ranges.
 cmp :: Ord a
