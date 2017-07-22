@@ -17,8 +17,8 @@ queryTest xs (a,b) = rset == set
   where
     lo   = min a b
     hi   = max a b
-    set  = all (flip elem xs) [lo .. hi]
     rset = R.queryRange (lo,hi) (R.fromList xs)
+    set  = all (flip elem xs) [lo .. hi]
 
 -- | Test the conversion from and to lists.
 listTest :: [Word8]  -- ^ points
@@ -48,8 +48,8 @@ sizeTest :: [Word8]
          -> Bool
 sizeTest xs = rset == set
   where
-    set  = (genericLength . nub) xs :: Integer
     rset = (R.size . R.fromList) xs :: Integer
+    set  = (genericLength . nub) xs :: Integer
 
 -- | Print a name of the property test and execute the QuickCheck
 -- algorithm.
