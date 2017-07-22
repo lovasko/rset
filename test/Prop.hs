@@ -63,11 +63,11 @@ runTest args (name, prop) = do
 runTests :: Args
          -> IO [Result]
 runTests args = mapM (runTest args) tests
-  where tests = [ ("list",  property listTest)
-                , ("query", property queryTest)
-                , ("union", property unionTest)
-                , ("isect", property intersectTest)
-                , ("size",  property sizeTest) ]
+  where tests = [ ("list     ", property listTest)
+                , ("query    ", property queryTest)
+                , ("union    ", property unionTest)
+                , ("intersect", property intersectTest)
+                , ("size     ", property sizeTest) ]
 
 -- | Parse command-line options into test arguments. In case invalid or
 -- no arguments were provided, the test fallbacks into a default value.
