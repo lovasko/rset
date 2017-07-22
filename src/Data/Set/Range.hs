@@ -106,14 +106,14 @@ cmp :: Ord a
     -> (a,a)   -- ^ second range
     -> Overlap -- ^ overap relationship
 cmp (a,b) (c,d)
-  | a < c         && a < d         = FstSmaller
-  | c < a         && c < b         = SndSmaller
-  | a == c        && b == d        = Equal
-  | between a c d && between b c d = FstInside
-  | between c a b && between d a b = SndInside
-  | a < c         && between b c d = FstOverlap
-  | c < a         && between d a b = SndOverlap
-  | otherwise                      = Equal -- ^ dead code
+  | a < c && b < c && a < d && b < d = FstSmaller
+  | c < a && d < b && c < b && d < a = SndSmaller
+  | a == c        && b == d          = Equal
+  | between a c d && between b c d   = FstInside
+  | between c a b && between d a b   = SndInside
+  | a < c         && between b c d   = FstOverlap
+  | c < a         && between d a b   = SndOverlap
+  | otherwise                        = Equal -- ^ dead code
   where
     between x lo hi = lo <= x && x <= hi
 
