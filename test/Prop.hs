@@ -43,6 +43,15 @@ intersectTest xs ys = rset == set
     rset = R.toList $ R.intersect (R.fromList xs) (R.fromList ys)
     set  = sort $ nub $ intersect xs ys
 
+-- | Test the diffence of one set from another.
+differenceTest :: [Word8] -- ^ points
+               -> [Word8] -- ^ points
+               -> Bool    -- ^ result
+differenceTest xs ys = rset == set
+  where
+    rset = R.toList $ R.difference (R.fromList xs) (R.fromList ys)
+    set  = sort $ nub $ filter (not . flip elem ys) xs
+
 -- | Test the number of stored points in a set.
 sizeTest :: [Word8]
          -> Bool
@@ -65,11 +74,12 @@ runTest args (name, prop) = do
 runTests :: Args
          -> IO [Result]
 runTests args = mapM (runTest args) tests
-  where tests = [ ("list     ", property listTest)
-                , ("query    ", property queryTest)
-                , ("union    ", property unionTest)
-                , ("intersect", property intersectTest)
-                , ("size     ", property sizeTest) ]
+  where tests = [ ("list      ", property listTest)
+                , ("query     ", property queryTest)
+                , ("union     ", property unionTest)
+                , ("intersect ", property intersectTest)
+                , ("difference", property differenceTest)
+                , ("size      ", property sizeTest) ]
 
 -- | Parse command-line options into test arguments. In case invalid or
 -- no arguments were provided, the test fallbacks into a default value.
