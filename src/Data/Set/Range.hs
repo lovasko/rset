@@ -26,12 +26,15 @@ module Data.Set.Range
 -- access
 , insertPoint
 , insertRange
+, removePoint
+, removeRange
 
 -- member testing
 , queryPoint
 , queryRange
 
 -- combinations
+, difference
 , intersect
 , union
 
@@ -76,6 +79,20 @@ insertRange :: (Ord a, Enum a)
             -> RangeSet a -- ^ old range set
             -> RangeSet a -- ^ new range set
 insertRange r = union [r]
+
+-- | Remove a single point from the range set.
+removePoint :: (Ord a, Enum a)
+            => a
+            -> RangeSet a
+            -> RangeSet a
+removePoint p = flip difference [(p,p)]
+
+-- | Remove a range from the range set.
+removeRange :: (Ord a, Enum a)
+            => (a,a)
+            -> RangeSet a
+            -> RangeSet a
+removeRange r = flip difference [r]
 
 -- | Create a range set from a list of points. The ordering of the points is
 -- not important. The list can contain duplicates.
@@ -151,6 +168,26 @@ queryRange x (r : rs) = go $ cmp x r
     go SndInside  = False
     go FstOverlap = False
     go SndOverlap = False
+
+-- | Subtract a range set from another range.
+difference :: (Ord a, Enum a)
+           => RangeSet a -- ^ first range set
+           -> RangeSet a -- ^ second range set
+           -> RangeSet a -- ^ difference of two range sets
+difference xs           []           = xs
+difference []           _            = []
+difference ((a,b) : xs) ((c,d) : ys) = go $ cmp (a,b) (c,d)
+  where
+    go Equal      =              difference xs                ys
+    go FstSmaller = (a,b)      : difference xs                ((c,d) : ys)
+    go FstInside  =              difference xs                ((c,d) : ys)
+    go FstOverlap = (a,pred c) : difference xs                ((succ b,d) : ys)
+    go SndSmaller =              difference ((a,b) : xs)      ys
+    go SndInside
+      | a == c    =              difference ((succ d,b) : xs) ys
+      | b == d    = (a,pred c) : difference xs                ys
+      | otherwise = (a,pred c) : difference ((succ d,b) : xs) ys
+    go SndOverlap =              difference ((succ d,b) : xs) ys
 
 -- | Create an union of two range sets.
 union :: (Ord a, Enum a)
