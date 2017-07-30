@@ -45,7 +45,7 @@ import Prelude hiding (null)
 
 
 -- | A simple range, denoted by the low and high boundaries.
-type Range a = (a, a)
+type Range a = (a,a)
 
 -- | A set of ranges
 type RangeSet a = [Range a]
@@ -105,8 +105,8 @@ fromList = foldr insertPoint empty
 toList :: Enum a
        => RangeSet a -- ^ range set
        -> [a]        -- ^ points
-toList []         = []
-toList ((a,b):xs) = [a .. b] ++ toList xs
+toList []           = []
+toList ((a,b) : xs) = [a .. b] ++ toList xs
 
 -- | Merge all adjacent ranges.
 merge :: (Eq a, Enum a)
@@ -194,9 +194,9 @@ union :: (Ord a, Enum a)
       => RangeSet a -- ^ first range set
       -> RangeSet a -- ^ second range set
       -> RangeSet a -- ^ union of two range sets
-union xs []                 = xs
-union [] ys                 = ys
-union ((a,b):xs) ((c,d):ys) = merge $ go $ cmp (a,b) (c,d)
+union xs []                     = xs
+union [] ys                     = ys
+union ((a,b) : xs) ((c,d) : ys) = merge $ go $ cmp (a,b) (c,d)
   where
     go FstSmaller = (a,b) : union xs ((c,d) : ys)
     go SndSmaller = (c,d) : union ((a,b) : xs) ys
@@ -211,9 +211,9 @@ intersect :: (Ord a, Enum a)
           => RangeSet a -- ^ first range set
           -> RangeSet a -- ^ second range set
           -> RangeSet a -- ^ intersection of two range sets
-intersect _  []                 = []
-intersect [] _                  = []
-intersect ((a,b):xs) ((c,d):ys) = merge $ go $ cmp (a,b) (c,d)
+intersect _  []                     = []
+intersect [] _                      = []
+intersect ((a,b) : xs) ((c,d) : ys) = merge $ go $ cmp (a,b) (c,d)
   where
     go FstSmaller =         intersect xs ((c,d) : ys)
     go SndSmaller =         intersect ((a,b) : xs) ys
