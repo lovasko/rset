@@ -120,12 +120,12 @@ merge ((a,b) : (c,d) : xs)
   | otherwise   = (a,b) : merge ((c,d) : xs)
 
 data Overlap
- = FstSmaller -- ^ no overlap + first range is smaller
- | SndSmaller -- ^ no overlap + second range is smaller
- | Equal      -- ^ ranges are equal
+ = Equal      -- ^ ranges are equal
+ | FstSmaller -- ^ no overlap + first range is smaller
  | FstInside  -- ^ first range is inside the second one
- | SndInside  -- ^ second range is inside the first one
  | FstOverlap -- ^ first range is smaller and overlaps with second one
+ | SndSmaller -- ^ no overlap + second range is smaller
+ | SndInside  -- ^ second range is inside the first one
  | SndOverlap -- ^ second range is smaller and overlaps with first one
  deriving (Eq, Show)
 
@@ -135,13 +135,13 @@ cmp :: Ord a
     -> (a,a)   -- ^ second range
     -> Overlap -- ^ overap relationship
 cmp (a,b) (c,d)
+  | a == c         && b == d         = Equal
   | a < c && b < c && a < d && b < d = FstSmaller
+  | between a c d  && between b c d  = FstInside
+  | a < c          && between b c d  = FstOverlap
   | c < a && d < b && c < b && d < a = SndSmaller
-  | a == c        && b == d          = Equal
-  | between a c d && between b c d   = FstInside
-  | between c a b && between d a b   = SndInside
-  | a < c         && between b c d   = FstOverlap
-  | c < a         && between d a b   = SndOverlap
+  | between c a b  && between d a b  = SndInside
+  | c < a          && between d a b  = SndOverlap
   | otherwise                        = Equal -- dead code
   where
     between x lo hi = lo <= x && x <= hi
@@ -161,12 +161,12 @@ queryRange :: Ord a
 queryRange _ []       = False
 queryRange x (r : rs) = go $ cmp x r
   where
-    go FstSmaller = False
-    go SndSmaller = queryRange x rs
     go Equal      = True
+    go FstSmaller = False
     go FstInside  = True
-    go SndInside  = False
     go FstOverlap = False
+    go SndSmaller = queryRange x rs
+    go SndInside  = False
     go SndOverlap = False
 
 -- | Subtract a range set from another range.
@@ -198,12 +198,12 @@ union xs []                     = xs
 union [] ys                     = ys
 union ((a,b) : xs) ((c,d) : ys) = merge $ go $ cmp (a,b) (c,d)
   where
-    go FstSmaller = (a,b) : union xs ((c,d) : ys)
+    go Equal      = (a,b) : union xs           ys
+    go FstSmaller = (a,b) : union xs           ((c,d) : ys)
+    go FstInside  =         union xs           ((c,d) : ys)
+    go FstOverlap = (a,b) : union xs           ((b,d) : ys)
     go SndSmaller = (c,d) : union ((a,b) : xs) ys
-    go Equal      = (a,b) : union xs ys
-    go FstInside  =         union xs ((c,d) : ys)
     go SndInside  =         union ((a,b) : xs) ys
-    go FstOverlap = (a,b) : union xs ((b,d) : ys)
     go SndOverlap = (c,d) : union ((d,b) : xs) ys
 
 -- | Create an intersection of two range sets.
@@ -215,10 +215,10 @@ intersect _  []                     = []
 intersect [] _                      = []
 intersect ((a,b) : xs) ((c,d) : ys) = merge $ go $ cmp (a,b) (c,d)
   where
-    go FstSmaller =         intersect xs ((c,d) : ys)
-    go SndSmaller =         intersect ((a,b) : xs) ys
-    go Equal      = (a,b) : intersect xs ys
-    go FstInside  = (a,b) : intersect xs ((b,d) : ys)
+    go Equal      = (a,b) : intersect xs           ys
+    go FstSmaller =         intersect xs           ((c,d) : ys)
+    go FstInside  = (a,b) : intersect xs           ((b,d) : ys)
+    go FstOverlap = (c,b) : intersect xs           ((b,d) : ys)
     go SndInside  = (c,d) : intersect ((d,b) : xs) ys
-    go FstOverlap = (c,b) : intersect xs ((b,d) : ys)
+    go SndSmaller =         intersect ((a,b) : xs) ys
     go SndOverlap = (a,d) : intersect ((d,b) : xs) ys
