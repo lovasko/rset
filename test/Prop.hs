@@ -21,9 +21,14 @@ queryTest xs (a,b) = rset == set
     set  = all (flip elem xs) [lo .. hi]
 
 -- | Test the conversion from and to lists.
-listTest :: [Word8]  -- ^ points
-         -> Bool     -- ^ result
+listTest :: [Word8] -- ^ points
+         -> Bool    -- ^ result
 listTest xs = (sort . nub) xs == (R.toList . R.fromList) xs
+
+-- | Test the conversion from and to lists.
+ascListTest :: [Word8] -- ^ points
+            -> Bool    -- ^ result
+ascListTest xs = (sort . nub) xs == (R.toList . R.fromAscList . sort) xs
 
 -- | Test the union of two sets.
 unionTest :: [Word8] -- ^ points
@@ -75,6 +80,7 @@ runTests :: Args
          -> IO [Result]
 runTests args = mapM (runTest args) tests
   where tests = [ ("list      ", property listTest)
+                , ("ascList   ", property ascListTest)
                 , ("query     ", property queryTest)
                 , ("union     ", property unionTest)
                 , ("intersect ", property intersectTest)
