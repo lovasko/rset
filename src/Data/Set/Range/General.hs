@@ -1,5 +1,6 @@
 module Data.Set.Range.General
 ( empty
+, fromAscList
 , fromList
 , null
 , size
@@ -35,6 +36,20 @@ fromList :: (Ord a, Enum a)
          => [a]        -- ^ list of points
          -> RangeSet a -- ^ range set
 fromList = foldr insertPoint empty
+
+-- | Create a range set from a list of asecending points. The list can contain
+-- duplicates.
+fromAscList :: (Ord a, Enum a)
+            => [a]        -- ^ list of ascending points
+            -> RangeSet a -- ^ range set
+fromAscList = foldr combine []
+  where
+    combine p []              = [(p,p)]
+    combine p ((a,b) : xs)
+      | p < a  && succ p == a = (p,b) : xs
+      | b < p  && succ b == p = (a,p) : xs
+      | a <= p && p <= b      = (a,b) : xs
+      | otherwise             = (p,p) : (a,b) : xs
 
 -- | Convert the range set into a list of points.
 toList :: Enum a
