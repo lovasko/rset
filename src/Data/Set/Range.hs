@@ -22,6 +22,7 @@ module Data.Set.Range
 -- conversions
 , fromList
 , fromAscList
+, fromDescList
 , toList
 
 -- access
