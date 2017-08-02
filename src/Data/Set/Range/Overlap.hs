@@ -3,6 +3,7 @@ module Data.Set.Range.Overlap
 , overlap
 ) where
 
+-- | Comparison of two ranges.
 data Overlap
  = Equal      -- ^ ranges are equal
  | FstSmaller -- ^ no overlap + first range is smaller
