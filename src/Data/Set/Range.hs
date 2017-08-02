@@ -19,10 +19,10 @@ module Data.Set.Range
 , null
 , size
 
--- conversions
-, fromList
+-- list conversions
 , fromAscList
 , fromDescList
+, fromList
 , toList
 
 -- access
@@ -45,6 +45,7 @@ import Prelude hiding (null)
 
 import Data.Set.Range.Access
 import Data.Set.Range.General
+import Data.Set.Range.List
 import Data.Set.Range.Query
 import Data.Set.Range.Combine
 import Data.Set.Range.Types
