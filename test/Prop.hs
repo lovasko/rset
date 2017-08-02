@@ -33,7 +33,7 @@ ascListTest xs = R.fromList xs == (R.fromAscList . sort) xs
 -- | Test the conversion from and to descending lists.
 descListTest :: [Word8] -- ^ points
              -> Bool    -- ^ result
-descListTest xs = R.fromList xs == (R.fromDescList . reverse . sort) xs
+descListTest xs = R.fromList xs == (R.fromDescList . sortBy (flip compare)) xs
 
 -- | Test the union of two sets.
 unionTest :: [Word8] -- ^ points
