@@ -25,10 +25,15 @@ listTest :: [Word8] -- ^ points
          -> Bool    -- ^ result
 listTest xs = (sort . nub) xs == (R.toList . R.fromList) xs
 
--- | Test the conversion from and to lists.
+-- | Test the conversion from and to ascending lists.
 ascListTest :: [Word8] -- ^ points
             -> Bool    -- ^ result
-ascListTest xs = (sort . nub) xs == (R.toList . R.fromAscList . sort) xs
+ascListTest xs = R.fromList xs == (R.fromAscList . sort) xs
+
+-- | Test the conversion from and to descending lists.
+descListTest :: [Word8] -- ^ points
+             -> Bool    -- ^ result
+descListTest xs = R.fromList xs == (R.fromDescList . reverse . sort) xs
 
 -- | Test the union of two sets.
 unionTest :: [Word8] -- ^ points
@@ -81,6 +86,7 @@ runTests :: Args
 runTests args = mapM (runTest args) tests
   where tests = [ ("list      ", property listTest)
                 , ("ascList   ", property ascListTest)
+                , ("descList  ", property descListTest)
                 , ("query     ", property queryTest)
                 , ("union     ", property unionTest)
                 , ("intersect ", property intersectTest)
