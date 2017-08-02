@@ -38,7 +38,7 @@ fromList :: (Ord a, Enum a)
          -> RangeSet a -- ^ range set
 fromList = foldr insertPoint empty
 
--- | Create a range set from a list of asecending points. The list can contain
+-- | Create a range set from a list of ascending points. The list can contain
 -- duplicates.
 fromAscList :: (Ord a, Enum a)
             => [a]        -- ^ list of ascending points
