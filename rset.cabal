@@ -19,7 +19,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Data.Set.Range
-  other-modules:       Data.Set.Range.Access
+  other-modules:       Data.Set.Range.Modify
                      , Data.Set.Range.Combine
                      , Data.Set.Range.General
                      , Data.Set.Range.List

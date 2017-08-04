@@ -5,7 +5,7 @@ module Data.Set.Range.List
 , toList
 ) where
 
-import Data.Set.Range.Access
+import Data.Set.Range.Modify
 import Data.Set.Range.General
 import Data.Set.Range.Types
 

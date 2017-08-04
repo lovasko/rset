@@ -1,4 +1,15 @@
-module Data.Set.Range.Access
+{- |
+Module      : Data.Set.Range.Modify
+Description : Basic functions to modify the contents of a range set.
+Copyright   : (c) 2017 Daniel Lovasko
+License     : BSD2
+
+Maintainer  : Daniel Lovasko <daniel.lovasko@gmail.com>
+Stability   : stable
+Portability : portable
+-}
+
+module Data.Set.Range.Modify
 ( insertPoint
 , insertRange
 , removePoint

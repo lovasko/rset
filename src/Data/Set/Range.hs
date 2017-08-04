@@ -43,7 +43,7 @@ module Data.Set.Range
 
 import Prelude hiding (null)
 
-import Data.Set.Range.Access
+import Data.Set.Range.Modify
 import Data.Set.Range.General
 import Data.Set.Range.List
 import Data.Set.Range.Query
