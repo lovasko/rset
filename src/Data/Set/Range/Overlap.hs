@@ -1,3 +1,14 @@
+{- |
+Module      : Data.Set.Range.Overlap
+Description : Computation of overlap (or lack thereof) between two ranges.
+Copyright   : (c) 2017 Daniel Lovasko
+License     : BSD2
+
+Maintainer  : Daniel Lovasko <daniel.lovasko@gmail.com>
+Stability   : stable
+Portability : portable
+-}
+
 module Data.Set.Range.Overlap
 ( Overlap(..)
 , overlap

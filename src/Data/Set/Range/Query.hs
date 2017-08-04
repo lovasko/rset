@@ -1,3 +1,14 @@
+{- |
+Module      : Data.Set.Range.Query
+Description : Membership testing.
+Copyright   : (c) 2017 Daniel Lovasko
+License     : BSD2
+
+Maintainer  : Daniel Lovasko <daniel.lovasko@gmail.com>
+Stability   : stable
+Portability : portable
+-}
+
 module Data.Set.Range.Query
 ( queryPoint
 , queryRange

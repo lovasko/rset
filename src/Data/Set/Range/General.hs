@@ -1,3 +1,14 @@
+{- |
+Module      : Data.Set.Range.General
+Description : General functions that provide information about a range set.
+Copyright   : (c) 2017 Daniel Lovasko
+License     : BSD2
+
+Maintainer  : Daniel Lovasko <daniel.lovasko@gmail.com>
+Stability   : stable
+Portability : portable
+-}
+
 module Data.Set.Range.General
 ( empty
 , null
