@@ -3,9 +3,8 @@ version:             1.0.0
 synopsis:            Range set
 description:         Data structure that stores a set of ranges. It provides an
                      API similar to the Data.Set module. Types stored in the
-                     data structure have to be instances of Eq, Ord, Enum and
-                     Bounded. Future releases of the module will add support
-                     for non-bounded types.
+                     data structure have to be instances of Eq, Ord and Enum
+                     typeclasses.
 homepage:            https://github.com/lovasko/rset
 license:             OtherLicense
 license-file:        LICENSE
