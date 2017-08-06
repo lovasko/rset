@@ -23,5 +23,7 @@ install:
 - stack --no-terminal install
 
 script:
-- travis_wait stack build --pedantic --test
+- stack build --pedantic --coverage
 - stack haddock
+- stack test
+- stack hpc report rset-test.tix
