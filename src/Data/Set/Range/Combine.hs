@@ -47,7 +47,6 @@ difference ((a,b) : xs) ((c,d) : ys) = go $ overlap (a,b) (c,d)
     go SndSmaller =              difference ((a,b) : xs)      ys
     go SndInside
       | a == c    =              difference ((succ d,b) : xs) ys
-      | b == d    = (a,pred c) : difference xs                ys
       | otherwise = (a,pred c) : difference ((succ d,b) : xs) ys
     go SndOverlap =              difference ((succ d,b) : xs) ys
 
