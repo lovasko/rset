@@ -127,8 +127,8 @@ runTests args = mapM (runTest args) tests
 -- no arguments were provided, the test fallbacks into a default value.
 parseArguments :: [String]
                -> Args
-parseArguments []    = stdArgs { maxSuccess=100000,           chatty=False }
-parseArguments (x:_) = stdArgs { maxSuccess=readDef 100000 x, chatty=False }
+parseArguments []    = stdArgs { maxSuccess=20000,           chatty=False }
+parseArguments (x:_) = stdArgs { maxSuccess=readDef 20000 x, chatty=False }
 
 -- | Evaluate test results and set appropriate process exit code.
 main :: IO ()
