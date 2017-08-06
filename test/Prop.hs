@@ -29,6 +29,14 @@ queryRangeTest xs (a,b) = rset == set
     rset = R.queryRange (lo,hi) (R.fromList xs)
     set  = all (flip elem xs) [lo .. hi]
 
+-- | Test the empty set checking.
+nullTest :: [Word8] -- ^ points
+         -> Bool    -- ^ result
+nullTest xs = rset == set
+  where
+    rset = R.null (R.fromList xs)
+    set  = null xs
+
 -- | Test the conversion from and to lists.
 listTest :: [Word8] -- ^ points
          -> Bool    -- ^ result
@@ -131,7 +139,8 @@ runTest args (name, prop) = do
 runTests :: Args
          -> IO [Result]
 runTests args = mapM (runTest args) tests
-  where tests = [ ("list       ", property listTest)
+  where tests = [ ("null       ", property nullTest)
+                , ("list       ", property listTest)
                 , ("ascList    ", property ascListTest)
                 , ("descList   ", property descListTest)
                 , ("queryPoint ", property queryPointTest)
