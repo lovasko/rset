@@ -10,6 +10,15 @@ import qualified Data.Set.Range as R
 
 
 -- | Test the range set membership.
+queryPointTest :: [Word8]
+               -> Word8
+               -> Bool
+queryPointTest xs y = rset == set
+  where
+    rset = R.queryPoint y (R.fromList xs)
+    set  = elem y xs
+
+-- | Test the range set membership.
 queryRangeTest :: [Word8]       -- ^ points
                -> (Word8,Word8) -- ^ range
                -> Bool          -- ^ result
@@ -105,6 +114,7 @@ runTests args = mapM (runTest args) tests
   where tests = [ ("list       ", property listTest)
                 , ("ascList    ", property ascListTest)
                 , ("descList   ", property descListTest)
+                , ("queryPoint ", property queryPointTest)
                 , ("queryRange ", property queryRangeTest)
                 , ("insertPoint", property insertPointTest)
                 , ("insertRange", property insertRangeTest)
