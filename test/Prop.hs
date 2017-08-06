@@ -62,6 +62,26 @@ insertRangeTest xs (a,b) = rset == set
     a'   = min a b
     b'   = max a b
 
+-- | Test removing a single point from the range set.
+removePointTest :: [Word8] -- ^ points
+                -> Word8   -- ^ point to remove
+                -> Bool    -- ^ result
+removePointTest xs y = rset == set
+  where
+    rset = R.toList $ R.removePoint y (R.fromList xs)
+    set  = sort $ nub $ filter (/= y) xs
+
+-- | Test removing a range from the range set.
+removeRangeTest :: [Word8]
+                -> (Word8,Word8)
+                -> Bool
+removeRangeTest xs (a,b) = rset == set
+  where
+    lo   = min a b
+    hi   = max a b
+    rset = R.toList $ R.removeRange (lo,hi) (R.fromList xs)
+    set  = sort $ nub $ filter (not . flip elem [lo .. hi]) xs
+
 -- | Test the union of two sets.
 unionTest :: [Word8] -- ^ points
           -> [Word8] -- ^ points
@@ -118,6 +138,8 @@ runTests args = mapM (runTest args) tests
                 , ("queryRange ", property queryRangeTest)
                 , ("insertPoint", property insertPointTest)
                 , ("insertRange", property insertRangeTest)
+                , ("removePoint", property removePointTest)
+                , ("removeRange", property removeRangeTest)
                 , ("union      ", property unionTest)
                 , ("intersect  ", property intersectTest)
                 , ("difference ", property differenceTest)
