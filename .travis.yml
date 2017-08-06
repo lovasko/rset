@@ -25,6 +25,5 @@ install:
 script:
 - stack clean
 - stack test --pedantic --coverage
-- find .
-- stack hpc report rset-test.tix
+- stack hpc report $(find . -name 'rset-test.tix')
 - stack haddock
