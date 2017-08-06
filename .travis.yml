@@ -23,8 +23,8 @@ install:
 - stack --no-terminal install
 
 script:
-- stack build --pedantic --coverage
-- stack haddock
-- stack test
+- stack clean
+- stack test --pedantic --coverage
 - find .
 - stack hpc report rset-test.tix
+- stack haddock
