@@ -26,4 +26,5 @@ script:
 - stack build --pedantic --coverage
 - stack haddock
 - stack test
+- find .
 - stack hpc report rset-test.tix
