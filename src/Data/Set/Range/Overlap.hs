@@ -23,7 +23,6 @@ data Overlap
  | SndSmaller -- ^ no overlap + second range is smaller
  | SndInside  -- ^ second range is inside the first one
  | SndOverlap -- ^ second range is smaller and overlaps with first one
- deriving (Eq, Show)
 
 -- | Compute the overlap relationship between to ranges.
 overlap :: Ord a
