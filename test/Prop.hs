@@ -35,6 +35,24 @@ descListTest :: [Word8] -- ^ points
              -> Bool    -- ^ result
 descListTest xs = R.fromList xs == (R.fromDescList . sortBy (flip compare)) xs
 
+insertPointTest :: [Word8]
+                -> Word8
+                -> Bool
+insertPointTest xs y = rset == set
+  where
+    rset = R.toList $ R.insertPoint y (R.fromList xs)
+    set  = sort $ nub $ (y:xs)
+
+insertRangeTest :: [Word8]
+                -> (Word8,Word8)
+                -> Bool
+insertRangeTest xs (a,b) = rset == set
+  where
+    rset = R.toList $ R.insertRange (a',b') (R.fromList xs)
+    set  = sort $ nub $ ([a' .. b'] ++ xs)
+    a'   = min a b
+    b'   = max a b
+
 -- | Test the union of two sets.
 unionTest :: [Word8] -- ^ points
           -> [Word8] -- ^ points
@@ -84,14 +102,16 @@ runTest args (name, prop) = do
 runTests :: Args
          -> IO [Result]
 runTests args = mapM (runTest args) tests
-  where tests = [ ("list      ", property listTest)
-                , ("ascList   ", property ascListTest)
-                , ("descList  ", property descListTest)
-                , ("query     ", property queryTest)
-                , ("union     ", property unionTest)
-                , ("intersect ", property intersectTest)
-                , ("difference", property differenceTest)
-                , ("size      ", property sizeTest) ]
+  where tests = [ ("list       ", property listTest)
+                , ("ascList    ", property ascListTest)
+                , ("descList   ", property descListTest)
+                , ("query      ", property queryTest)
+                , ("insertPoint", property insertPointTest)
+                , ("insertRange", property insertRangeTest)
+                , ("union      ", property unionTest)
+                , ("intersect  ", property intersectTest)
+                , ("difference ", property differenceTest)
+                , ("size       ", property sizeTest) ]
 
 -- | Parse command-line options into test arguments. In case invalid or
 -- no arguments were provided, the test fallbacks into a default value.
