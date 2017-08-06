@@ -36,7 +36,6 @@ overlap (a,b) (c,d)
   | a < c          && between b c d  = FstOverlap
   | c < a && d < b && c < b && d < a = SndSmaller
   | between c a b  && between d a b  = SndInside
-  | c < a          && between d a b  = SndOverlap
-  | otherwise                        = Equal -- dead code
+  | otherwise                        = SndOverlap
   where
     between x lo hi = lo <= x && x <= hi
