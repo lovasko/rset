@@ -67,10 +67,10 @@ insertRangeTest :: [Word8]       -- ^ points
                 -> Bool          -- ^ result
 insertRangeTest xs (a,b) = rset == set
   where
-    rset = R.toList $ R.insertRange (a',b') (R.fromList xs)
-    set  = sort $ nub ([a' .. b'] ++ xs)
-    a'   = min a b
-    b'   = max a b
+    lo   = min a b
+    hi   = max a b
+    rset = R.toList $ R.insertRange (lo,hi) (R.fromList xs)
+    set  = sort $ nub ([lo .. hi] ++ xs)
 
 -- | Test removing a single point from the range set.
 removePointTest :: [Word8] -- ^ points
