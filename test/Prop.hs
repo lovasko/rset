@@ -58,7 +58,7 @@ insertPointTest :: [Word8]
 insertPointTest xs y = rset == set
   where
     rset = R.toList $ R.insertPoint y (R.fromList xs)
-    set  = sort $ nub $ (y:xs)
+    set  = sort $ nub (y:xs)
 
 insertRangeTest :: [Word8]
                 -> (Word8,Word8)
@@ -66,7 +66,7 @@ insertRangeTest :: [Word8]
 insertRangeTest xs (a,b) = rset == set
   where
     rset = R.toList $ R.insertRange (a',b') (R.fromList xs)
-    set  = sort $ nub $ ([a' .. b'] ++ xs)
+    set  = sort $ nub ([a' .. b'] ++ xs)
     a'   = min a b
     b'   = max a b
 
