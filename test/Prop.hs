@@ -10,9 +10,9 @@ import qualified Data.Set.Range as R
 
 
 -- | Test the range set membership.
-queryPointTest :: [Word8]
-               -> Word8
-               -> Bool
+queryPointTest :: [Word8] -- ^ points
+               -> Word8   -- ^ point
+               -> Bool    -- ^ result
 queryPointTest xs y = rset == set
   where
     rset = R.queryPoint y (R.fromList xs)
@@ -52,17 +52,19 @@ descListTest :: [Word8] -- ^ points
              -> Bool    -- ^ result
 descListTest xs = R.fromList xs == (R.fromDescList . sortBy (flip compare)) xs
 
-insertPointTest :: [Word8]
-                -> Word8
-                -> Bool
+-- | Test adding new points to the range set.
+insertPointTest :: [Word8] -- ^ points
+                -> Word8   -- ^ point
+                -> Bool    -- ^ result
 insertPointTest xs y = rset == set
   where
     rset = R.toList $ R.insertPoint y (R.fromList xs)
     set  = sort $ nub (y:xs)
 
-insertRangeTest :: [Word8]
-                -> (Word8,Word8)
-                -> Bool
+-- | Test adding a new range into the range set.
+insertRangeTest :: [Word8]       -- ^ points
+                -> (Word8,Word8) -- ^ range
+                -> Bool          -- ^ result
 insertRangeTest xs (a,b) = rset == set
   where
     rset = R.toList $ R.insertRange (a',b') (R.fromList xs)
@@ -80,9 +82,9 @@ removePointTest xs y = rset == set
     set  = sort $ nub $ filter (/= y) xs
 
 -- | Test removing a range from the range set.
-removeRangeTest :: [Word8]
-                -> (Word8,Word8)
-                -> Bool
+removeRangeTest :: [Word8]       -- ^ points
+                -> (Word8,Word8) -- ^ range
+                -> Bool          -- ^ result
 removeRangeTest xs (a,b) = rset == set
   where
     lo   = min a b
@@ -118,8 +120,8 @@ differenceTest xs ys = rset == set
     set  = sort $ nub $ filter (not . flip elem ys) xs
 
 -- | Test the number of stored points in a set.
-sizeTest :: [Word8]
-         -> Bool
+sizeTest :: [Word8] -- ^ points
+         -> Bool    -- ^ result
 sizeTest xs = rset == set
   where
     rset = (R.size . R.fromList) xs :: Integer
@@ -136,8 +138,8 @@ runTest args (name, prop) = do
   return result
 
 -- | Run all available property tests and collect results.
-runTests :: Args
-         -> IO [Result]
+runTests :: Args        -- ^ test settings
+         -> IO [Result] -- ^ results
 runTests args = mapM (runTest args) tests
   where tests = [ ("null       ", property nullTest)
                 , ("list       ", property listTest)
@@ -156,8 +158,8 @@ runTests args = mapM (runTest args) tests
 
 -- | Parse command-line options into test arguments. In case invalid or
 -- no arguments were provided, the test fallbacks into a default value.
-parseArguments :: [String]
-               -> Args
+parseArguments :: [String] -- ^ command-line arguments
+               -> Args     -- ^ test settings
 parseArguments []    = stdArgs { maxSuccess=20000,           chatty=False }
 parseArguments (x:_) = stdArgs { maxSuccess=readDef 20000 x, chatty=False }
 
