@@ -113,14 +113,14 @@ integration service.
 
 The most recent test coverage reported by HPC is as follows:
 ```
- 94% expressions used (459/488)
- 66% boolean coverage (12/18)
-      66% guards (12/18), 4 always True, 1 always False, 1 unevaluated
+100% expressions used (468/468)
+ 75% boolean coverage (12/16)
+      75% guards (12/16), 4 always True
      100% 'if' conditions (0/0)
      100% qualifiers (0/0)
- 93% alternatives used (59/63)
+100% alternatives used (61/61)
 100% local declarations used (6/6)
- 59% top-level declarations used (13/22)
+100% top-level declarations used (18/18)
 ```
 
 ## License
