@@ -22,8 +22,8 @@ import Data.Set.Range.Types
 -- | Merge all adjacent ranges. This function assumes that the range set is
 -- sorted by its first range parameter.
 merge :: (Eq a, Enum a)
-      => RangeSet a -- ^ old range set
-      -> RangeSet a -- ^ new range set
+  => RangeSet a -- ^ old range set
+  -> RangeSet a -- ^ new range set
 merge []        = []
 merge [xs]      = [xs]
 merge ((a,b) : (c,d) : xs)
@@ -33,9 +33,9 @@ merge ((a,b) : (c,d) : xs)
 
 -- | Subtract a range set from another range.
 difference :: (Ord a, Enum a)
-           => RangeSet a -- ^ first range set
-           -> RangeSet a -- ^ second range set
-           -> RangeSet a -- ^ difference of two range sets
+  => RangeSet a -- ^ first range set
+  -> RangeSet a -- ^ second range set
+  -> RangeSet a -- ^ difference of two range sets
 difference xs           []           = xs
 difference []           _            = []
 difference ((a,b) : xs) ((c,d) : ys) = go $ overlap (a,b) (c,d)
@@ -52,9 +52,9 @@ difference ((a,b) : xs) ((c,d) : ys) = go $ overlap (a,b) (c,d)
 
 -- | Create an intersection of two range sets.
 intersect :: (Ord a, Enum a)
-          => RangeSet a -- ^ first range set
-          -> RangeSet a -- ^ second range set
-          -> RangeSet a -- ^ intersection of two range sets
+  => RangeSet a -- ^ first range set
+  -> RangeSet a -- ^ second range set
+  -> RangeSet a -- ^ intersection of two range sets
 intersect _  []                     = []
 intersect [] _                      = []
 intersect ((a,b) : xs) ((c,d) : ys) = merge $ go $ overlap (a,b) (c,d)
@@ -69,9 +69,9 @@ intersect ((a,b) : xs) ((c,d) : ys) = merge $ go $ overlap (a,b) (c,d)
 
 -- | Create an union of two range sets.
 union :: (Ord a, Enum a)
-      => RangeSet a -- ^ first range set
-      -> RangeSet a -- ^ second range set
-      -> RangeSet a -- ^ union of two range sets
+  => RangeSet a -- ^ first range set
+  -> RangeSet a -- ^ second range set
+  -> RangeSet a -- ^ union of two range sets
 union xs []                     = xs
 union [] ys                     = ys
 union ((a,b) : xs) ((c,d) : ys) = merge $ go $ overlap (a,b) (c,d)

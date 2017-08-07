@@ -26,9 +26,9 @@ data Overlap
 
 -- | Compute the overlap relationship between to ranges.
 overlap :: Ord a
-        => (a,a)   -- ^ first range
-        -> (a,a)   -- ^ second range
-        -> Overlap -- ^ overap relationship
+  => (a,a)   -- ^ first range
+  -> (a,a)   -- ^ second range
+  -> Overlap -- ^ overap relationship
 overlap (a,b) (c,d)
   | a == c         && b == d         = Equal
   | a < c && b < c && a < d && b < d = FstSmaller
