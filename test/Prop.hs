@@ -137,24 +137,23 @@ runTest args (name, prop) = do
   putStr $ unwords [name, output result]
   return result
 
--- | Run all available property tests and collect results.
-runTests :: Args        -- ^ test settings
-         -> IO [Result] -- ^ results
-runTests args = mapM (runTest args) tests
-  where tests = [ ("null       ", property nullTest)
-                , ("size       ", property sizeTest)
-                , ("ascList    ", property ascListTest)
-                , ("descList   ", property descListTest)
-                , ("list       ", property listTest)
-                , ("insertPoint", property insertPointTest)
-                , ("insertRange", property insertRangeTest)
-                , ("removePoint", property removePointTest)
-                , ("removeRange", property removeRangeTest)
-                , ("queryPoint ", property queryPointTest)
-                , ("queryRange ", property queryRangeTest)
-                , ("difference ", property differenceTest)
-                , ("intersect  ", property intersectTest)
-                , ("union      ", property unionTest) ]
+-- | List of property tests to run.
+tests :: [(String,Property)] -- ^ name & test function
+tests = [
+    ("null       ", property nullTest)
+  , ("size       ", property sizeTest)
+  , ("ascList    ", property ascListTest)
+  , ("descList   ", property descListTest)
+  , ("list       ", property listTest)
+  , ("insertPoint", property insertPointTest)
+  , ("insertRange", property insertRangeTest)
+  , ("removePoint", property removePointTest)
+  , ("removeRange", property removeRangeTest)
+  , ("queryPoint ", property queryPointTest)
+  , ("queryRange ", property queryRangeTest)
+  , ("difference ", property differenceTest)
+  , ("intersect  ", property intersectTest)
+  , ("union      ", property unionTest) ]
 
 -- | Parse command-line options into test arguments. In case invalid or
 -- no arguments were provided, the test fallbacks into a default value.
@@ -168,5 +167,5 @@ main :: IO ()
 main = do
   putStrLn "\nRunning property tests:"
   args    <- getArgs
-  results <- runTests (parseArguments args)
+  results <- mapM (runTest $ parseArguments args) tests
   if all isSuccess results then exitSuccess else exitFailure
