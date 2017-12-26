@@ -25,52 +25,52 @@ All provided functions can be divided into the following 5 categories: list
 conversions, combinations of multiple range sets, membership testing,
 modifications of range set contents and general utility functions.
 
-#### `empty`
+#### `empty :: RangeSet a`
 Create an empty range set.
 
-#### `null`
+#### `null :: RangeSet a -> Bool`
 Test whether the range set is empty.
 
-#### `size`
+#### `size :: (Num n, Enum a) => RangeSet a -> n`
 Get the overall number of points.
 
-#### `fromAscList`
+#### `fromAscList :: (Ord a, Enum a) => [a] -> RangeSet a`
 Create a range set from a list of ascending points. 
 
-#### `fromDescList`
+#### `fromDescList :: (Ord a, Enum a) => [a] -> RangeSet a`
 Create a range set from a list of descending points.
 
-#### `fromList`
+#### `fromList :: (Ord a, Enum a) => [a] -> RangeSet a`
 Create a range set from any list of points.
 
-#### `toList`
+#### `toList :: Enum a => RangeSet a -> [a]`
 Convert a range set into list of points.
 
-#### `insertPoint`
+#### `insertPoint :: (Ord a, Enum a) => a -> RangeSet a -> RangeSet a`
 Insert a point into the range set.
 
-#### `insertRange`
+#### `insertRange :: (Ord a, Enum a) => (a,a) -> RangeSet a -> RangeSet a`
 Insert a range into the range set.
 
-#### `removePoint`
+#### `removePoint :: (Ord a, Enum a) => a -> RangeSet a -> RangeSet a`
 Remove a point from the range set.
 
-#### `removeRange`
+#### `removeRange :: (Ord a, Enum a) => (a,a) -> RangeSet a -> RangeSet a`
 Remove a range from the range set.
 
-#### `queryPoint`
+#### `queryPoint :: Ord a => a -> RangeSet a -> Bool`
 Test whether a point is part of the range set.
 
-#### `queryRange`
+#### `queryRange :: Ord a => (a,a) -> RangeSet a -> Bool`
 Test whether a range is part of the range set.
 
-#### `difference`
+#### `difference :: (Ord a, Enum a) => RangeSet a -> RangeSet a -> RangeSet a`
 Select points contained only in the first range set.
 
-#### `intersect`
+#### `intersect :: (Ord a, Enum a) => RangeSet a -> RangeSet a -> RangeSet a`
 Select points contained in both of the range sets.
 
-#### `union`
+#### `union :: (Ord a, Enum a) => RangeSet a -> RangeSet a -> RangeSet a`
 Select points contained in either of the range sets.
 
 ## Complexity
