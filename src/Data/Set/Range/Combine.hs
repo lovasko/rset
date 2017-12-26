@@ -40,7 +40,6 @@ difference xs           []           = xs
 difference []           _            = []
 difference ((a,b) : xs) ((c,d) : ys) = go $ overlap (a,b) (c,d)
   where
-    go Equal      =              difference xs                ys
     go FstSmaller = (a,b)      : difference xs                ((c,d) : ys)
     go FstInside  =              difference xs                ((c,d) : ys)
     go FstOverlap = (a,pred c) : difference xs                ((succ b,d) : ys)
@@ -59,7 +58,6 @@ intersect _  []                     = []
 intersect [] _                      = []
 intersect ((a,b) : xs) ((c,d) : ys) = merge $ go $ overlap (a,b) (c,d)
   where
-    go Equal      = (a,b) : intersect xs           ys
     go FstSmaller =         intersect xs           ((c,d) : ys)
     go FstInside  = (a,b) : intersect xs           ((b,d) : ys)
     go FstOverlap = (c,b) : intersect xs           ((b,d) : ys)
@@ -76,7 +74,6 @@ union xs []                     = xs
 union [] ys                     = ys
 union ((a,b) : xs) ((c,d) : ys) = merge $ go $ overlap (a,b) (c,d)
   where
-    go Equal      = (a,b) : union xs           ys
     go FstSmaller = (a,b) : union xs           ((c,d) : ys)
     go FstInside  =         union xs           ((c,d) : ys)
     go FstOverlap = (a,b) : union xs           ((b,d) : ys)

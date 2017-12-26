@@ -14,15 +14,6 @@ module Data.Set.Range.Overlap
 , overlap
 ) where
 
--- Equal
---
---  A  B
---  |  |
---  C  D
---  |  |
---  v  v
--- -+--+-
-
 -- FstSmaller      FstInside    FstOverlap
 --
 --  A  B            A  B         A     B
@@ -43,8 +34,7 @@ module Data.Set.Range.Overlap
 
 -- | Comparison of two ranges.
 data Overlap
- = Equal      -- ^ ranges are equal
- | FstSmaller -- ^ no overlap + first range is smaller
+ = FstSmaller -- ^ no overlap + first range is smaller
  | FstInside  -- ^ first range is inside the second one
  | FstOverlap -- ^ first range is smaller and overlaps with second one
  | SndSmaller -- ^ no overlap + second range is smaller
@@ -57,7 +47,6 @@ overlap :: Ord a
   -> (a,a)   -- ^ second range
   -> Overlap -- ^ overap relationship
 overlap (a,b) (c,d)
-  | a == c         && b == d         = Equal
   | a < c && b < c && a < d && b < d = FstSmaller
   | between a c d  && between b c d  = FstInside
   | a < c          && between b c d  = FstOverlap

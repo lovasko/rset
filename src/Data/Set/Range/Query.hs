@@ -33,7 +33,6 @@ queryRange :: Ord a
 queryRange _ []       = False
 queryRange x (r : rs) = go $ overlap x r
   where
-    go Equal      = True
     go FstSmaller = False
     go FstInside  = True
     go FstOverlap = False
