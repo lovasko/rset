@@ -14,6 +14,33 @@ module Data.Set.Range.Overlap
 , overlap
 ) where
 
+-- Equal
+--
+--  A  B
+--  |  |
+--  C  D
+--  |  |
+--  v  v
+-- -+--+-
+
+-- FstSmaller      FstInside    FstOverlap
+--
+--  A  B            A  B         A     B
+--  |  |            |  |         |     |
+--  |  |  C  D      C  |  D      |  C  |  D
+--  |  |  |  |      |  |  |      |  |  |  |
+--  v  v  v  v      v  v  v      v  v  v  v
+-- -+--+--+--+-    -+--+--+-    -+--+--+--+-
+
+-- SndSmaller      SndInside    SndOverlap
+--
+--        A  B      A     B         A     B
+--        |  |      |     |         |     |
+--  C  D  |  |      C  D  |      C  |  D  |
+--  |  |  |  |      |  |  |      |  |  |  |
+--  v  v  v  v      v  v  v      v  v  v  v
+-- -+--+--+--+-    -+--+--+-    -+--+--+--+-
+
 -- | Comparison of two ranges.
 data Overlap
  = Equal      -- ^ ranges are equal
