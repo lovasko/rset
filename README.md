@@ -74,26 +74,25 @@ Select points contained in both of the range sets.
 Select points contained in either of the range sets.
 
 ## Complexity
-+--------------+------+-------+
-| Function     | Time | Space |
-+--------------+------+-------+
-| empty        | O(1) | O(1)  |
-| null         | O(1) | O(1)  |
-| size         | O(n) | O(l)  |
-| fromAscList  | O(n) | O(n)  |
-| fromDescList | O(n) | O(n)  |
-| fromList     | O(n) | O(k)  |
-| toList       | O(k) | O(n)  |
-| insertPoint  | O(k) | O(1)  |
-| insertRange  | O(k) | O(1)  |
-| removePoint  | O(k) | O(1)  | 
-| removeRange  | O(k) | O(1)  |
-| queryPoint   | O(k) | O(1)  |
-| queryRange   | O(k) | O(1)  |
-| difference   | O(k) | O(k)  |
-| intersect    | O(k) | O(k)  |
-| union        | O(k) | O(k)  |
-+--------------+------+-------+
+
+| Function       | Time   | Space  |
+|----------------|--------|--------|
+| `empty`        | O(*1*) | O(*1*) |
+| `null`         | O(*1*) | O(*1*) |
+| `size`         | O(*n*) | O(*l*) |
+| `fromAscList`  | O(*n*) | O(*n*) |
+| `fromDescList` | O(*n*) | O(*n*) |
+| `fromList`     | O(*n*) | O(*k*) |
+| `toList`       | O(*k*) | O(*n*) |
+| `insertPoint`  | O(*k*) | O(*1*) |
+| `insertRange`  | O(*k*) | O(*1*) |
+| `removePoint`  | O(*k*) | O(*1*) |
+| `removeRange`  | O(*k*) | O(*1*) |
+| `queryPoint`   | O(*k*) | O(*1*) |
+| `queryRange`   | O(*k*) | O(*1*) |
+| `difference`   | O(*k*) | O(*k*) |
+| `intersect`    | O(*k*) | O(*k*) |
+| `union`        | O(*k*) | O(*k*) |
 
 * *n* is the number of all points in the set
 * *k* is the number of distinct ranges in the set
