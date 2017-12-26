@@ -76,7 +76,7 @@ Select points contained in either of the range sets.
 ## Complexity
 
 | Function       | Time   | Space  |
-|----------------|--------|--------|
+|:---------------|:-------|:-------|
 | `empty`        | O(*1*) | O(*1*) |
 | `null`         | O(*1*) | O(*1*) |
 | `size`         | O(*n*) | O(*l*) |
